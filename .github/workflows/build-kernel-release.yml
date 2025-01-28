@@ -7,6 +7,11 @@ permissions:
 on:
   workflow_dispatch:
     inputs:
+      build_for_xaga:
+        description: 'Build Kernel for xaga?'
+        required: true
+        type: boolean
+        default: true
       build_a12_5_10:
         description: 'Build Android 12 5.10 kernel?'
         required: true
@@ -39,6 +44,10 @@ on:
         default: false
 
 jobs:
+  build-kernel-for-xaga:
+    uses: ./.github/workflows/build-kernel-for-xaga.yml
+    secrets: inherit
+    if: ${{ inputs.build_for_xaga}}
   build-kernel-a12-5-10:
     uses: ./.github/workflows/build-kernel-a12-5.10.yml
     secrets: inherit
